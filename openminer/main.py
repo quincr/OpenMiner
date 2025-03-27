@@ -1,14 +1,19 @@
 from __future__ import annotations
 
+from window import Window
+
 class OpenMiner:
     def __init__(self: OpenMiner) -> None:
-        pass
+        self.window = Window()
 
     def Init(self: OpenMiner) -> None:
-        pass
+        self.window.Create()
 
     def Start(self: OpenMiner) -> None:
-        pass
+        while self.window.Tick():
+            pass
+
+        self.window.Destroy()
 
 
 if __name__ == '__main__':
