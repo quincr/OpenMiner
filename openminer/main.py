@@ -15,7 +15,6 @@ class OpenMiner:
 
         self.window.Destroy()
 
-
 if __name__ == '__main__':
     game = OpenMiner()
     game.Init()

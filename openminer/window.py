@@ -26,7 +26,7 @@ class Window():
         glfw.make_context_current(window)
         glfw.swap_interval(0)
 
-        gl.glClearColor(0.25, 0.3, 0.2, 1.0)
+        gl.glClearColor(0.20, 0.3, 0.25, 1.0)
         gl.glViewport(0, 0, 800, 450)
 
         self.window = window
