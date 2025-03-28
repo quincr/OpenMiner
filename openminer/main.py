@@ -7,6 +7,7 @@ from shader import Shader
 from camera import Camera
 from mesh import Mesh
 from material import Material
+from world import Chunk
 
 class OpenMiner:
     def __init__(self: OpenMiner) -> None:
@@ -29,14 +30,17 @@ class OpenMiner:
         self.default_camera.position.z = -5
 
     def Start(self: OpenMiner) -> None:
+        self.test_chunk = Chunk(self.default_shader, self.texture_atlas)
+        self.test_chunk.BuildMesh()
+
         while self.window.Tick():
-            self.default_camera.Tick(self.window.resolution)
+            self.default_camera.Tick(self.window.resolution, self.window.window, 1 / 60)
 
             self.default_shader.Use()
             self.default_shader.SetMat4x4("view", self.default_camera.m_view)
             self.default_shader.SetMat4x4("projection", self.default_camera.m_projection)
 
-            self.testing_mesh.Render()
+            self.test_chunk.Render()
 
         self.default_shader.Destroy()
         self.window.Destroy()

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import glm
+import glfw
+import keyboard
 
 class Camera():
     def __init__(self: Camera) -> None:
@@ -15,7 +17,11 @@ class Camera():
         self.m_view = None
         self.m_projection = None
 
-    def Tick(self: Camera, resolution: glm.vec2) -> None:
+        self.speed = 10
+        self.sensitivity = 0.2
+        self.last_right_clicked = False
+
+    def Tick(self: Camera, resolution: glm.vec2, glfw_window, delta_time: float) -> None:
         direction = glm.vec3()
 
         self.rotation.y = max(min(self.rotation.y, 89.99), -89.99)
@@ -34,3 +40,30 @@ class Camera():
         self.right = -camera_right
         self.up = camera_up
         self.front = camera_front
+
+        if not glfw.get_mouse_button(glfw_window, 1):
+            self.last_right_clicked = False
+            return
+
+        if not self.last_right_clicked:
+            glfw.set_cursor_pos(glfw_window, resolution.x / 2, resolution.y / 2)
+            self.last_right_clicked = True
+
+        speed = self.speed * delta_time
+
+        if keyboard.is_pressed("left_shift"):
+            speed *= 7.5
+
+        if keyboard.is_pressed("w"):
+            self.position += self.front * speed
+        if keyboard.is_pressed("s"):
+            self.position -= self.front * speed
+        if keyboard.is_pressed("d"):
+            self.position += self.right * speed
+        if keyboard.is_pressed("a"):
+            self.position -= self.right * speed
+
+        mx, my = glm.vec2(glfw.get_cursor_pos(glfw_window)) - (resolution.x // 2, resolution.y // 2)
+        glfw.set_cursor_pos(glfw_window, resolution.x / 2, resolution.y / 2)
+
+        self.rotation.xy += glm.vec2(mx * self.sensitivity, my * self.sensitivity)

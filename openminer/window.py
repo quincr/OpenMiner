@@ -24,19 +24,20 @@ class Window():
         glfw.set_framebuffer_size_callback(window, self._onResize)
 
         glfw.make_context_current(window)
-        glfw.swap_interval(0)
+        glfw.swap_interval(1)
 
         gl.glClearColor(0.20, 0.3, 0.25, 1.0)
         gl.glViewport(0, 0, 800, 450)
 
         gl.glEnable(gl.GL_DEPTH_TEST)
+        gl.glEnable(gl.GL_CULL_FACE)
 
         self.window = window
         self.resolution = glm.vec2(800, 450)
 
     def _onResize(self: Window, window, new_x: int, new_y: int) -> None:
         gl.glViewport(0, 0, new_x, new_y)
-        self.resolution = glm.vec2(new_x, new_y)
+        self.resolution = glm.vec2(glfw.get_window_size(window))
 
     def Tick(self: Window) -> bool:
         if glfw.window_should_close(self.window):
