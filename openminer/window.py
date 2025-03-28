@@ -14,7 +14,7 @@ class Window():
         glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
 
-        window = glfw.create_window(800, 450, "Tournament", None, None)
+        window = glfw.create_window(800, 450, "OpenMiner", None, None)
         if not window:
             raise RuntimeError("Failed to create GLFW window!")
 
